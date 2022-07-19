@@ -1,12 +1,15 @@
 import * as React from 'react'
 import type { FC } from 'react'
 
-import { Layout } from './layout'
 import { Routes, Route } from 'react-router-dom'
-import { Home, Login, Pressure, Register, RoutesScreens } from './screens'
+import { RoutesScreens } from './screens'
 import { GuardRoute } from './components'
 
-const Home = import()
+const Layout = React.lazy(() => import('./layout'))
+const Home = React.lazy(() => import('./screens/Home'))
+const Pressure = React.lazy(() => import('./screens/Pressure'))
+const Login = React.lazy(() => import('./screens/Login'))
+const Register = React.lazy(() => import('./screens/Register'))
 
 export const App: FC = () => {
     return (

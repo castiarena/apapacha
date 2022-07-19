@@ -1,1 +1,2 @@
-export { Pressure } from './Pressure'
+import { Pressure } from './Pressure'
+export default Pressure
