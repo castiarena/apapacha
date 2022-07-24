@@ -18,6 +18,7 @@ export const UserProvider: FCC = ({ children }) => {
                     user && {
                         email: user.email || '',
                         name: user.displayName || '',
+                        id: user.uid,
                     },
                 )
             },

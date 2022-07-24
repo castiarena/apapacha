@@ -1,8 +1,10 @@
 import * as React from 'react'
 import type { FC, ReactNode } from 'react'
+import { Suspense } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useUser } from '../../config'
 import { RoutesScreens } from '../../screens'
+import { Spinner } from '@chakra-ui/react'
 
 type TGuardRouteProps = {
     element: ReactNode | null
@@ -11,9 +13,9 @@ type TGuardRouteProps = {
 export const GuardRoute: FC<TGuardRouteProps> = ({ element }) => {
     const { user } = useUser()
 
-    if (!user) {
-        return <Navigate to={RoutesScreens.LOGIN} />
-    }
-
-    return <>{element}</>
+    return (
+        <Suspense fallback={<Spinner />}>
+            {user ? element : <Navigate to={RoutesScreens.LOGIN} />}
+        </Suspense>
+    )
 }

@@ -1,6 +1,7 @@
 export type TUser = {
     name: string
     email: string
+    id: string
 }
 
 export type TAuthRegistryErrorTypes =

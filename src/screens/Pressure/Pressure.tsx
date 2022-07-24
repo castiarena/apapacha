@@ -1,10 +1,19 @@
 import React, { FC } from 'react'
-import { HStack, Heading } from '@chakra-ui/react'
+import { Heading, Button, useDisclosure, VStack, Box } from '@chakra-ui/react'
+import { AddPressureModal } from './AddPressureModal'
+import { TablePressureResults } from './TablePressureResults'
 
 export const Pressure: FC = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
     return (
-        <HStack>
+        <VStack alignItems="stretch">
             <Heading>Latest result of you blood pressure</Heading>
-        </HStack>
+            <Box>
+                <Button onClick={onOpen}>Add mesure</Button>
+            </Box>
+            <TablePressureResults />
+            <AddPressureModal onClose={onClose} isOpen={isOpen} />
+        </VStack>
     )
 }
