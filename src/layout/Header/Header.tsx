@@ -1,23 +1,10 @@
 import React, { FC } from 'react'
-import {
-    HStack,
-    Box,
-    Avatar,
-    Text,
-    Heading,
-    Container,
-    Link,
-} from '@chakra-ui/react'
-import { useUser } from '../../config'
+import { HStack, Box, Heading, Container, Link } from '@chakra-ui/react'
 import { Link as RouterLink } from 'react-router-dom'
 import { RoutesScreens } from '../../screens'
-
-const useHeaderRoutes = () => {
-    return []
-}
+import { UserBadge } from './UserBadge'
 
 export const Header: FC = () => {
-    const { user } = useUser()
     return (
         <Box
             py={4}
@@ -38,8 +25,7 @@ export const Header: FC = () => {
                         </Link>
                     </HStack>
                     <HStack gap={4}>
-                        <Text>{user?.name || user?.email}</Text>
-                        <Avatar name={user?.name} />
+                        <UserBadge />
                     </HStack>
                 </HStack>
             </Container>
