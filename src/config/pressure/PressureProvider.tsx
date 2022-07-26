@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { getDatabase, ref, get, set, push, onValue } from 'firebase/database'
+import { ref, set, push, onValue } from 'firebase/database'
 import { PressureContext } from './PressureContext'
 import type { TPressureContext } from './types'
 import type { FCC } from '../../react.types'
@@ -20,12 +20,33 @@ export const PressureProvider: FCC = ({ children }) => {
         [user?.id],
     )
 
+    const averageAndPeriod = useMemo(() => {
+        const getSum = (param: keyof TPressureResult) =>
+            results.reduce((acc, val) => acc + val[param], 0)
+
+        const highAverage = getSum('high') / results.length
+        const lowAverage = getSum('low') / results.length
+        const from =
+            results.length > 1
+                ? new Date(results[0].date).toLocaleDateString()
+                : 'not set'
+        const to =
+            results.length > 1
+                ? new Date(
+                      results[results.length - 1].date,
+                  ).toLocaleDateString()
+                : 'not set'
+
+        return { highAverage, lowAverage, from, to }
+    }, [results])
+
     const pressureContextValue: TPressureContext = useMemo(
         () => ({
             results,
             setPressure,
+            averageAndPeriod,
         }),
-        [results, setPressure],
+        [averageAndPeriod, results, setPressure],
     )
 
     useEffect(() => {
