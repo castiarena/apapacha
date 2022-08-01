@@ -25,7 +25,6 @@ export const UserProvider: FCC = ({ children }) => {
         const unsubscribeToAuthStateChanged = onAuthStateChanged(
             auth,
             async (user) => {
-                setLoading(false)
                 const userMetadata: TUser =
                     (
                         await get(ref(database, `usersMetadata/${user?.uid}`))
@@ -39,11 +38,12 @@ export const UserProvider: FCC = ({ children }) => {
                         id: user.uid,
                     },
                 )
+                setLoading(false)
             },
         )
 
         return () => unsubscribeToAuthStateChanged()
-    }, [])
+    }, [user?.id])
 
     const userContextValue: TUserContextType = useMemo(
         () => ({

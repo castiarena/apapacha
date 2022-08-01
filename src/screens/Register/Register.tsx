@@ -13,8 +13,8 @@ import type { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useUserRegistration } from '../../config'
-import { Link as RouterLink } from 'react-router-dom'
+import { useUser, useUserRegistration } from '../../config'
+import { Link as RouterLink, Navigate } from 'react-router-dom'
 import { RoutesScreens } from '../routes'
 
 type RegisterForm = {
@@ -30,6 +30,7 @@ const registerFormSchema = yup
     .required()
 
 export const Register: FC = () => {
+    const { isLoggedIn } = useUser()
     const {
         register,
         handleSubmit,
@@ -43,7 +44,9 @@ export const Register: FC = () => {
         await registrate(data.email, data.password)
     }
 
-    return (
+    return isLoggedIn ? (
+        <Navigate to={RoutesScreens.HOME} />
+    ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={2} alignItems="flex-start">
                 <Heading>Welcome to Apapacha</Heading>

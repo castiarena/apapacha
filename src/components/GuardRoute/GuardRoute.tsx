@@ -11,11 +11,11 @@ type TGuardRouteProps = {
 }
 
 export const GuardRoute: FC<TGuardRouteProps> = ({ element }) => {
-    const { user } = useUser()
+    const { isLoggedIn } = useUser()
 
     return (
         <Suspense fallback={<Spinner />}>
-            {user ? element : <Navigate to={RoutesScreens.LOGIN} />}
+            {isLoggedIn ? element : <Navigate to={RoutesScreens.LOGIN} />}
         </Suspense>
     )
 }

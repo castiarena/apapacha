@@ -12,10 +12,10 @@ import {
     VStack,
 } from '@chakra-ui/react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { Link as RouterLink, useNavigate, Navigate } from 'react-router-dom'
 import type { InferType } from 'yup'
 import { RoutesScreens } from '../routes'
-import { useUserLogin } from '../../config'
+import { useUser, useUserLogin } from '../../config'
 
 const loginFormSchema = yup.object({
     email: yup.string().email().required(),
@@ -32,6 +32,7 @@ export const Login: FC = () => {
     } = useForm<LoginForm>({
         resolver: yupResolver(loginFormSchema),
     })
+    const { isLoggedIn } = useUser()
     const { login, loadingUser } = useUserLogin()
     const navigate = useNavigate()
 
@@ -46,7 +47,9 @@ export const Login: FC = () => {
         navigate('/')
     }
 
-    return (
+    return isLoggedIn ? (
+        <Navigate to={RoutesScreens.HOME} />
+    ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
             <VStack spacing={2} alignItems="flex-start">
                 <Heading>Welcome to Apapacha</Heading>

@@ -24,8 +24,12 @@ export const PressureProvider: FCC = ({ children }) => {
         const getSum = (param: keyof TPressureResult) =>
             results.reduce((acc, val) => acc + val[param], 0)
 
-        const highAverage = getSum('high') / results.length
-        const lowAverage = getSum('low') / results.length
+        const highAverage = Number(
+            (getSum('high') / results.length).toPrecision(3),
+        )
+        const lowAverage = Number(
+            (getSum('low') / results.length).toPrecision(3),
+        )
         const from =
             results.length > 1
                 ? new Date(results[0].date).toLocaleDateString()

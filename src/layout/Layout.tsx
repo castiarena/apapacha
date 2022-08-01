@@ -13,7 +13,7 @@ export const Layout: FCC = ({ children }) => {
             <HStack
                 justifyContent={'center'}
                 alignItems={'center'}
-                height={'full'}>
+                height={'100vh'}>
                 <Spinner boxSize={12} />
             </HStack>
         )
