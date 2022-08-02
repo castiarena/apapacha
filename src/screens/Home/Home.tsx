@@ -1,26 +1,23 @@
 import * as React from 'react'
 import type { FC } from 'react'
-import {
-    Box,
-    Stat,
-    StatGroup,
-    StatHelpText,
-    StatLabel,
-    StatNumber,
-    VStack,
-} from '@chakra-ui/react'
+import { Link as RouterLink } from 'react-router-dom'
+import { Box, Flex, Heading, Link, Text, VStack } from '@chakra-ui/react'
 import { usePressure } from '../../config'
 import {
-    LineChart,
-    Line,
     XAxis,
     YAxis,
     CartesianGrid,
     Tooltip,
     Legend,
     ResponsiveContainer,
+    AreaChart,
+    Area,
+    BarChart,
+    Bar,
 } from 'recharts'
 import { useMemo } from 'react'
+import { format } from 'date-fns'
+import { RoutesScreens } from '../routes'
 
 export const Home: FC = () => {
     const { averageAndPeriod, results } = usePressure()
@@ -28,7 +25,7 @@ export const Home: FC = () => {
     const data = useMemo(
         () =>
             results.map(({ date, low, high }) => ({
-                name: date,
+                name: format(new Date(date), 'dd/MM/yyyy - hh:mm - eeee'),
                 low,
                 high,
             })),
@@ -36,26 +33,40 @@ export const Home: FC = () => {
     )
 
     return (
-        <VStack>
-            <StatGroup>
-                <Stat>
-                    <StatLabel>Low pressure Average</StatLabel>
-                    <StatNumber>{averageAndPeriod.lowAverage}</StatNumber>
-                    <StatHelpText>
-                        from {averageAndPeriod.from} to {averageAndPeriod.to}
-                    </StatHelpText>
-                </Stat>
-                <Stat>
-                    <StatLabel>High pressure Average</StatLabel>
-                    <StatNumber>{averageAndPeriod.highAverage}</StatNumber>
-                    <StatHelpText>
-                        from {averageAndPeriod.from} to {averageAndPeriod.to}
-                    </StatHelpText>
-                </Stat>
-            </StatGroup>
+        <VStack gap={6}>
+            <Heading>Average</Heading>
+            <Text>
+                You can check all the pressure entries at{' '}
+                <Link as={RouterLink} to={RoutesScreens.PRESSURE}>
+                    pressure
+                </Link>
+            </Text>
+            <Flex h={500} w={'100%'}>
+                <ResponsiveContainer width="100%" height="100%">
+                    <BarChart
+                        data={[
+                            {
+                                average: averageAndPeriod.lowAverage,
+                                name: 'low average',
+                            },
+                            {
+                                average: averageAndPeriod.highAverage,
+                                name: 'high average',
+                            },
+                        ]}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="name" />
+                        <YAxis />
+                        <Tooltip />
+                        <Legend />
+                        <Bar dataKey={'average'} fill={'#ff6c6c'} />
+                    </BarChart>
+                </ResponsiveContainer>
+            </Flex>
+            <Heading>Progress registry</Heading>
             <Box display={'flex'} h={500} w={'100%'}>
                 <ResponsiveContainer width="100%" height="100%">
-                    <LineChart
+                    <AreaChart
                         data={data}
                         margin={{
                             top: 5,
@@ -68,14 +79,13 @@ export const Home: FC = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Line
+                        <Area
                             type="monotone"
                             dataKey="low"
-                            stroke="#8884d8"
                             activeDot={{ r: 8 }}
                         />
-                        <Line type="monotone" dataKey="high" stroke="#82ca9d" />
-                    </LineChart>
+                        <Area type="monotone" dataKey="high" />
+                    </AreaChart>
                 </ResponsiveContainer>
             </Box>
         </VStack>

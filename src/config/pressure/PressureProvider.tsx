@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { ref, set, push, onValue } from 'firebase/database'
+import { format } from 'date-fns'
 import { PressureContext } from './PressureContext'
 import type { TPressureContext } from './types'
 import type { FCC } from '../../react.types'
@@ -32,13 +33,14 @@ export const PressureProvider: FCC = ({ children }) => {
         )
         const from =
             results.length > 1
-                ? new Date(results[0].date).toLocaleDateString()
+                ? format(new Date(results[0].date), 'dd/MM/yyyy - hh:mm')
                 : 'not set'
         const to =
             results.length > 1
-                ? new Date(
-                      results[results.length - 1].date,
-                  ).toLocaleDateString()
+                ? format(
+                      new Date(results[results.length - 1].date),
+                      'dd/MM/yyyy - hh:mm',
+                  )
                 : 'not set'
 
         return { highAverage, lowAverage, from, to }
