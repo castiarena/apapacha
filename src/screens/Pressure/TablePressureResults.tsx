@@ -9,6 +9,7 @@ import {
     Thead,
     Tr,
 } from '@chakra-ui/react'
+import { format } from 'date-fns'
 import { usePressure } from '../../config'
 
 export const TablePressureResults: FC = () => {
@@ -27,7 +28,9 @@ export const TablePressureResults: FC = () => {
                 <Tbody>
                     {results.map(({ date, high, low }) => (
                         <Tr key={date}>
-                            <Td>{new Date(date).toLocaleDateString()}</Td>
+                            <Td>
+                                {format(new Date(date), 'dd/MM/yyyy hh:mm')}
+                            </Td>
                             <Td isNumeric>{high}</Td>
                             <Td isNumeric>{low}</Td>
                         </Tr>

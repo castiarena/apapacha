@@ -86,7 +86,7 @@ export const AddPressureModal: FC<TAddPressureModalProps> = ({
                             <Input
                                 {...register('date')}
                                 placeholder="date"
-                                type="date"
+                                type="datetime-local"
                             />
                             {errors.date?.message && (
                                 <Text color="red">{errors.date.message}</Text>

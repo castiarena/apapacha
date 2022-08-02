@@ -61,7 +61,10 @@ export const PressureProvider: FCC = ({ children }) => {
             snapshot.forEach((snap) => {
                 pressuresForUser.push(snap.val() as TPressureResult)
             })
-            setResults(pressuresForUser)
+
+            setResults(
+                pressuresForUser.sort((a, b) => (a.date > b.date ? 1 : -1)),
+            )
         })
 
         return () => {

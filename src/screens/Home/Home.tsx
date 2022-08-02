@@ -53,7 +53,7 @@ export const Home: FC = () => {
                     </StatHelpText>
                 </Stat>
             </StatGroup>
-            <Box display={'flex'} h={500} w={'100vw'}>
+            <Box display={'flex'} h={500} w={'100%'}>
                 <ResponsiveContainer width="100%" height="100%">
                     <LineChart
                         data={data}
