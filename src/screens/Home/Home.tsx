@@ -1,15 +1,7 @@
 import * as React from 'react'
 import type { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import {
-    Box,
-    Flex,
-    Heading,
-    HStack,
-    Link,
-    Text,
-    VStack,
-} from '@chakra-ui/react'
+import { Box, Flex, Heading, Link, Text, VStack } from '@chakra-ui/react'
 import { usePressure } from '../../config'
 import {
     XAxis,
@@ -33,7 +25,10 @@ export const Home: FC = () => {
     const data = useMemo(
         () =>
             results.map(({ date, low, high }) => ({
-                name: format(new Date(date), 'dd/MM/yyyy - hh:mm - eeee'),
+                name: format(
+                    new Date(date),
+                    'dd/MM/yyyy - hh:mm aaaaa\'m\' - eeee',
+                ),
                 low,
                 high,
             })),
