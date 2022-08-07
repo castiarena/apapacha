@@ -1,7 +1,15 @@
 import * as React from 'react'
 import type { FC } from 'react'
 import { Link as RouterLink } from 'react-router-dom'
-import { Box, Flex, Heading, Link, Text, VStack } from '@chakra-ui/react'
+import {
+    Box,
+    Flex,
+    Heading,
+    HStack,
+    Link,
+    Text,
+    VStack,
+} from '@chakra-ui/react'
 import { usePressure } from '../../config'
 import {
     XAxis,
@@ -41,17 +49,14 @@ export const Home: FC = () => {
                     pressure
                 </Link>
             </Text>
-            <Flex h={500} w={'100%'}>
+            <Flex h={300} w={['100%', '50%']}>
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart
                         data={[
                             {
-                                average: averageAndPeriod.lowAverage,
-                                name: 'low average',
-                            },
-                            {
-                                average: averageAndPeriod.highAverage,
-                                name: 'high average',
+                                lowAverage: averageAndPeriod.lowAverage,
+                                highAverage: averageAndPeriod.highAverage,
+                                name: 'average',
                             },
                         ]}>
                         <CartesianGrid strokeDasharray="3 3" />
@@ -59,7 +64,8 @@ export const Home: FC = () => {
                         <YAxis />
                         <Tooltip />
                         <Legend />
-                        <Bar dataKey={'average'} fill={'#ff6c6c'} />
+                        <Bar dataKey={'lowAverage'} fill={'#0388f4'} />
+                        <Bar dataKey={'highAverage'} fill={'#ff6c6c'} />
                     </BarChart>
                 </ResponsiveContainer>
             </Flex>
